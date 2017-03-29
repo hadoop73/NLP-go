@@ -49,6 +49,7 @@ XGBoost 用到了二阶泰勒展开式
 
 而 GBDT 每一次分支,就是使得目标函数最小化
 
+[GBDT：梯度提升决策树](http://www.jianshu.com/p/005a4e6ac775)
 
 ![enter description here][5]
 
