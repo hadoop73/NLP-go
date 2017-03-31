@@ -178,6 +178,39 @@ a c b
 
 <h2 id='a6'>字符编码</h2>
 
+encode 主要用于为 Unicode 字符进行编码存储或传输
+
+decode 主要用于为文件进行解码成为 Unicode 编码用于显示
+
+一般在字符串之前家 u 能避免编码带来的显示问题
+
+使用模块codecs对文件进行操作,能够方便解决编码的问题
+
+```
+import codecs
+
+f = codecs.open('test.txt', encoding='UTF-8')
+u = f.read()
+f.close()
+print type(u) # <type 'unicode'>
+
+f = codecs.open('test.txt', 'a', encoding='UTF-8')
+# 写入unicode
+f.write(u)
+```
+
+可以使用模块chardet来进行文件编码检查
+```
+import chardet
+
+f = open('/path/file.txt',r)
+data = f.read()
+print chardet.detect(data)
+# 返回结果 {'confidence': 0.99, 'encoding': 'utf-8'}
+```
+
+[Python字符编码详解](http://www.cnblogs.com/huxi/archive/2010/12/05/1897271.html)
+
 [十分钟搞清字符集和字符编码][11]
 
 [字符编码笔记：ASCII，Unicode和UTF-8][12]
