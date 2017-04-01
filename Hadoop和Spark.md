@@ -46,6 +46,8 @@ hdfs dfs -copyToLocal /temp.txt
 
 **HDFS 写文件:**
 
+[HDFS的常用操作--hdfs下的文件操作常用命令总结](http://www.aboutyun.com/blog-4073-518.html)
+
 ```
 # 从本地文件系统中拷贝 temp.txt 到 HDFS 中
 hdfs dfs -copyFromLocal temp.txt /
@@ -145,6 +147,81 @@ iteblog.partitionBy(20, iteblog_domain)
 - 复杂的任务,Job之间的任务需要自己管理,在Spark中都是对RDD进行管理
 
 
+## 集群安装
+
+[Spark 1.6.1分布式集群环境搭建](https://my.oschina.net/jackieyeah/blog/659741)
+
+```
+ssh-keygen -t rsa -P ''
+# 再在各个 pc 中互相拷贝密钥
+# 再在每个 pc 中执行 ssh-add
+```
+
+[java.lang.IllegalArgumentException: URI has an authority component](http://stackoverflow.com/questions/37872800/hadoop2-7-0-namenode-format-java-lang-illegalargumentexception-uri-has-an-autho)
+
+
+**启动Hadoop和Spark**
+```
+hadoop/hdfs namenode -format
+hadoop/sbin/start-all.sh
+spark/sbin/start-master.sh
+spark/sbin/start-slaves.sh
+```
+**停止Hadoop和Spark**
+```
+spark/sbin/stop-master.sh
+spark/sbin/stop-slaves.sh
+hadoop/sbin/stop-all.sh
+```
+
+
+##  Spark 集群
+
+Spark 集群采用主从结构,一个节点负责中央协调,调度各个分布式工作节点,这个中央节点称为**驱动器节点**.工作节点称为**执行器节点**.驱动器节点和执行器节点一起被称为**Spark应用**
+
+
+![enter description here][10]
+
+驱动器节点通过集群管理器对执行器节点进行管理,尝试把所有任务基于数据所在位置分配给合适的执行器进程.
+
+执行器功能:执行任务,存储RDD数据
+
+
+```
+# 查看Spark Jobs完成情况
+http://master:4040/
+# 查看Spark集群情况
+http://master:8080/
+```
+
+
+###  Spark DataFrame
+
+[从CSV文件读取到DataFrame中](https://www.nodalpoint.com/spark-dataframes-from-csv-files/)
+
+[RDD、DataFrame和DataSet的区别](http://www.jianshu.com/p/c0181667daa0)
+
+DataFrame比RDD拥有更丰富的结构信息,列名称和类型等信息
+
+DataFrame是ROW对象的集合,更加丰富的算子,还包括列信息能够优化查询
+
+RDD强调不变性,会产生大量临时对象,对GC造成压力
+
+DataSet每个记录是一个强类型
+
+##  SparkContext和SparkSession
+
+[Spark 2.0系列之SparkSession详解](http://www.raincent.com/content-85-7196-1.html)
+
+![enter description here][11]
+
+SparkSession 是2.0引入,统一的Spark切入点,更能更加丰富包含DataFrame和DataSet等API
+
+SparkContext是使用其他Spark功能的中介,driver通过SparkContext连接到集群管理器对任务进行控制
+
+[Spark SQL, DataFrames 以及 Datasets 编程指南](http://ifeve.com/spark-sql-dataframes/)
+
+
   [1]: ./images/1490786580554.jpg "1490786580554.jpg"
   [2]: ./images/1490787242620.jpg "1490787242620.jpg"
   [3]: ./images/1490787885680.jpg "1490787885680.jpg"
@@ -154,3 +231,5 @@ iteblog.partitionBy(20, iteblog_domain)
   [7]: ./images/1490891412109.jpg "1490891412109.jpg"
   [8]: ./images/1490891742075.jpg "1490891742075.jpg"
   [9]: ./images/1490891940921.jpg "1490891940921.jpg"
+  [10]: ./images/1490960489315.jpg "1490960489315.jpg"
+  [11]: ./images/1490993876637.jpg "1490993876637.jpg"
