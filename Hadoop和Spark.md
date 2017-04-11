@@ -2,6 +2,11 @@
 
 ##  Hadoop
 
+```
+# 系统监视器
+gnome-system-monitor
+```
+
 [Hadoop 基础教程](http://blessht.iteye.com/blog/2095675)
 
 Hadoop 的核心就是 HDFS 和 MapReduce,HDFS 也就是 Hadoop 分布式文件系统,高度容错,部署在不同的 PC 上.
